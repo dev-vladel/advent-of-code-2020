@@ -20,34 +20,20 @@ namespace Day3
             
             foreach (var line in input)
             {
-                if (line.Length > rightToCheck)
-                {
-                    if (line[rightToCheck] == '#')
-                    {
-                        numberOfTrees++;
-                    } 
-                    else
-                    {
-                        numberOfNoTrees++;
-                    }
-                } 
-                else if (line.Length <= rightToCheck)
-                {
-                    int rightToCheckAux = rightToCheck;
+                int rightToCheckAux = rightToCheck;
 
-                    while (line.Length <= rightToCheckAux)
-                    {
-                        rightToCheckAux -= line.Length;
-                    }
+                while (line.Length <= rightToCheckAux)
+                {
+                    rightToCheckAux -= line.Length;
+                }
 
-                    if (line[rightToCheckAux] == '#')
-                    {
-                        numberOfTrees++;
-                    }
-                    else
-                    {
-                        numberOfNoTrees++;
-                    }
+                if (line[rightToCheckAux] == '#')
+                {
+                    numberOfTrees++;
+                }
+                else
+                {
+                    numberOfNoTrees++;
                 }
 
                 rightToCheck += 3;
