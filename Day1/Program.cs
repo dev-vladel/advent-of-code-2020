@@ -15,6 +15,7 @@ namespace Day1
             bool earlyBreak = false;
             string[] input = File.ReadAllLines(Constants.filePath);
 
+            // Part 1
             for(int i = 0; i < input.Length - 1; i++)
             {
                 for(int j = i + 1; j < input.Length; j++)
@@ -28,6 +29,41 @@ namespace Day1
                         Console.WriteLine(String.Format("Multiplied they are {0}", firstEntry * secondEntry));
 
                         earlyBreak = true;
+                        break;
+                    }
+                }
+
+                if (earlyBreak)
+                {
+                    break;
+                }
+            }
+
+            // Part 2
+            earlyBreak = false;
+
+            for (int i = 0; i < input.Length - 2; i++)
+            {
+                for (int j = i + 1; j < input.Length - 1; j++)
+                {
+                    for (int k = j + 1; k < input.Length; k++)
+                    {
+                        int firstEntry = Int32.Parse(input[i]);
+                        int secondEntry = Int32.Parse(input[j]);
+                        int thirdEntry = Int32.Parse(input[k]);
+
+                        if (firstEntry + secondEntry + thirdEntry == 2020)
+                        {
+                            Console.WriteLine(String.Format("Three entries that summed together give 2020 are {0}, {1} and {2}", firstEntry, secondEntry, thirdEntry));
+                            Console.WriteLine(String.Format("Multiplied they are {0}", firstEntry * secondEntry * thirdEntry));
+
+                            earlyBreak = true;
+                            break;
+                        }
+                    }
+
+                    if (earlyBreak)
+                    {
                         break;
                     }
                 }
