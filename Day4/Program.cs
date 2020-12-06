@@ -57,6 +57,7 @@ namespace Day4
                                     }
                                 }
                                 break;
+
                             case "iyr":
                                 if (value.Length == 4)
                                 {
@@ -66,6 +67,7 @@ namespace Day4
                                     }
                                 }
                                 break;
+
                             case "eyr":
                                 if (value.Length == 4)
                                 {
@@ -75,6 +77,7 @@ namespace Day4
                                     }
                                 }
                                 break;
+
                             case "hgt":
                                 Regex rxHeight = new Regex(@"(cm)|(in){1}");
                                 
@@ -90,6 +93,7 @@ namespace Day4
                                     }
                                 }
                                 break;
+
                             case "hcl":
                                 if (value.Substring(0, 1) == "#")
                                 {
@@ -102,6 +106,7 @@ namespace Day4
                                     }
                                 }
                                 break;
+
                             case "ecl":
                                 Regex rxEye = new Regex(@"(amb|blu|brn|gry|grn|hzl|oth){1}");
 
@@ -110,6 +115,7 @@ namespace Day4
                                     passport.EyeColor = value;
                                 }
                                 break;
+
                             case "pid":
                                 Regex rxPassportId = new Regex(@"^([0-9]){9}$");
 
@@ -118,6 +124,7 @@ namespace Day4
                                     passport.PassportId = value;
                                 }
                                 break;
+
                             case "cid":
                                 passport.CountryId = value;
                                 break;
