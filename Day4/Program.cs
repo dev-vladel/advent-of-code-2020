@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace Day4
 {
@@ -24,6 +25,7 @@ namespace Day4
     {
         public static void Main(string[] args)
         {
+            // I've added another line to the input.txt file because File.ReadAllLines ignores the last line if its whitespace or empty
             string[] input = File.ReadAllLines(Constants.filePath);
 
             int validPassports = 0;
