@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Day4
 {
@@ -48,25 +49,74 @@ namespace Day4
                         switch (key)
                         {
                             case "byr":
-                                passport.BirthYear = value;
+                                if (value.Length == 4)
+                                {
+                                    if (Int32.Parse(value) >= 1920 && Int32.Parse(value) <= 2002)
+                                    {
+                                        passport.BirthYear = value;
+                                    }
+                                }
                                 break;
                             case "iyr":
-                                passport.IssueYear = value;
+                                if (value.Length == 4)
+                                {
+                                    if (Int32.Parse(value) >= 2010 && Int32.Parse(value) <= 2020)
+                                    {
+                                        passport.IssueYear = value;
+                                    }
+                                }
                                 break;
                             case "eyr":
-                                passport.ExpirationYear = value;
+                                if (value.Length == 4)
+                                {
+                                    if (Int32.Parse(value) >= 2020 && Int32.Parse(value) <= 2030)
+                                    {
+                                        passport.ExpirationYear = value;
+                                    }
+                                }
                                 break;
                             case "hgt":
-                                passport.Height = value;
+                                Regex rxHeight = new Regex(@"(cm)|(in){1}");
+                                
+                                if (rxHeight.Matches(value).Any())
+                                {
+                                    string heightMeasure = value.Substring(value.Length - 2);
+                                    int heightValue = Int32.Parse(value.Substring(0, value.Length - 2));
+
+                                    if ((heightMeasure == "cm" && heightValue >= 150 && heightValue <= 193)
+                                        || (heightMeasure == "in" && heightValue >= 59 && heightValue <= 76))
+                                    {
+                                        passport.Height = value;
+                                    }
+                                }
                                 break;
                             case "hcl":
-                                passport.HairColor = value;
+                                if (value.Substring(0, 1) == "#")
+                                {
+                                    Regex rxHair = new Regex(@"([a-f0-9]){6}");
+                                    var hairColorValue = value.Substring(1);
+
+                                    if (hairColorValue.Length == 6 && rxHair.Matches(hairColorValue).Any())
+                                    {
+                                        passport.HairColor = value;
+                                    }
+                                }
                                 break;
                             case "ecl":
-                                passport.EyeColor = value;
+                                Regex rxEye = new Regex(@"(amb|blu|brn|gry|grn|hzl|oth){1}");
+
+                                if (rxEye.Matches(value).Any())
+                                {
+                                    passport.EyeColor = value;
+                                }
                                 break;
                             case "pid":
-                                passport.PassportId = value;
+                                Regex rxPassportId = new Regex(@"^([0-9]){9}$");
+
+                                if (rxPassportId.Matches(value).Any())
+                                {
+                                    passport.PassportId = value;
+                                }
                                 break;
                             case "cid":
                                 passport.CountryId = value;
