@@ -18,7 +18,6 @@ namespace Day6
             int sum = 0;
             int[] appearances = new int[130];
 
-            // solution to be added
             foreach (var line in input)
             {
                 foreach (var character in line)
