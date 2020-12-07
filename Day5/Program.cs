@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Day5
@@ -16,6 +17,7 @@ namespace Day5
 
             int seatMax = 0;
 
+            List<int> seats = new List<int>(); 
 
             foreach (var line in input)
             {
@@ -76,9 +78,38 @@ namespace Day5
                 {
                     seatMax = rowPosition * 8 + columnPosition;
                 }
+
+                // Build list of IDs
+                seats.Add(rowPosition * 8 + columnPosition);
             }
 
             Console.WriteLine(string.Format("The highest seat ID is {0}", seatMax));
+
+            // Sort list of IDs from converted array
+            var seatsArray = seats.ToArray();
+            int auxValue;
+
+            for (int i = 0; i < seatsArray.Length - 1; i++)
+            {
+                for (int j = i + 1; j < seatsArray.Length; j++)
+                {
+                    if (seatsArray[i] > seatsArray[j])
+                    {
+                        auxValue = seatsArray[i];
+                        seatsArray[i] = seatsArray[j];
+                        seatsArray[j] = auxValue;
+                    }
+                }
+            }
+
+            // Find your seat ID
+            for (int i = 0; i < seatsArray.Length - 1; i++)
+            {
+                if (seatsArray[i+1] - seatsArray[i] == 2)
+                {
+                    Console.WriteLine(string.Format("Your seat ID is {0}", seatsArray[i]+1));
+                }
+            }
 
             // Prevents console app from closing
             Console.WriteLine("Press any key to close program");
