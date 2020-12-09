@@ -15,8 +15,6 @@ namespace Day7
         {
             string[] input = File.ReadAllLines(Constants.filePath);
 
-            List<string> bags = new List<string>();
-
             // solution to be added
 
             // Prevents console app from closing
