@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Day7
@@ -13,6 +14,8 @@ namespace Day7
         static void Main(string[] args)
         {
             string[] input = File.ReadAllLines(Constants.filePath);
+
+            List<string> bags = new List<string>();
 
             // solution to be added
 
