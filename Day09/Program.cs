@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Day9
 {
@@ -20,7 +21,7 @@ namespace Day9
             #endregion
 
             #region part two
-
+            PartTwo(File.ReadAllText(Constants.filePath));
             #endregion
 
             // Prevents console app from closing
@@ -60,6 +61,44 @@ namespace Day9
                     for (int k = i - 23; k < i + 1; k++)
                     {
                         preambleSum.Add(Convert.ToInt64(input[j]) + Convert.ToInt64(input[k]));
+                    }
+                }
+            }
+        }
+
+        public static void PartTwo(string input)
+        {
+            // Weakness from part one
+            var weakness = 50047984L;
+
+            // Parsing the input into long array
+            var inputLong = input.Replace("\r", string.Empty)
+                .Split('\n')
+                .Reverse()
+                .SkipWhile(string.IsNullOrEmpty)
+                .Reverse()
+                .Select(s => (long)Convert.ChangeType(s, typeof(long)))
+                .ToArray();
+
+            for (var i = 0; i < inputLong.Length - 1; i++)
+            {
+                var continousSum = inputLong[i];
+
+                for (var j = i + 1; j < inputLong.Length && continousSum < weakness; j++)
+                {
+                    continousSum += inputLong[j];
+
+                    if (continousSum > weakness)
+                    {
+                        break;
+                    }
+
+                    if (continousSum == weakness)
+                    {
+                        var range = (inputLong[i..j]);
+                        var result = (range.Min() + range.Max()).ToString();
+
+                        Console.WriteLine("The first weakness number is {0}", result);
                     }
                 }
             }
