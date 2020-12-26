@@ -46,6 +46,55 @@ namespace Day8
             Console.WriteLine("The value of acc is {0}", acc);
             #endregion
 
+            #region part two
+            for (int i = 0; i < input.Length; i++)
+            {
+                string[] auxInput = File.ReadAllLines(Constants.filePath);
+                acc = 0;
+                frequency = new int[1000];
+
+                var splitLine = input[i].Split(' ');
+
+                if (splitLine[0].Contains("jmp"))
+                {
+                    auxInput[i] = "nop " + splitLine[1];
+                }
+                else if (splitLine[0].Contains("nop"))
+                {
+                    auxInput[i] = "jmp " + splitLine[1];
+                }
+
+                for (int j = 0; j < auxInput.Length; j++)
+                {
+                    frequency[j]++;
+
+                    if (frequency[j] > 1)
+                    {
+                        break;
+                    }
+
+                    var splitLineAux = auxInput[j].Split(' ');
+
+                    if (auxInput[j].Contains("acc"))
+                    {
+                        acc += Convert.ToInt32(splitLineAux[1]);
+                    }
+                    else if (auxInput[j].Contains("jmp"))
+                    {
+                        if (Convert.ToInt32(splitLineAux[1]) != 0)
+                        {
+                            j += Convert.ToInt32(splitLineAux[1]) - 1;
+                        }
+                    }
+
+                    if (j == auxInput.Length - 1)
+                    {
+                        Console.WriteLine("The value of acc without loop is {0}", acc);
+                    }
+                }
+            }
+            #endregion
+
             // Prevents console app from closing
             Console.WriteLine("Press any key to close program");
             Console.ReadKey();
