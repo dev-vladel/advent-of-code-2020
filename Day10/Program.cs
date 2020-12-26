@@ -17,7 +17,7 @@ namespace Day9
         {
             string input = File.ReadAllText(Constants.filePath);
 
-            #region part one
+            // Parsing the input to a list
             var parsedInput = input.Replace("\r", string.Empty)
                 .Split('\n')
                 .Reverse()
@@ -26,6 +26,7 @@ namespace Day9
                 .Select(s => (long)Convert.ChangeType(s, typeof(long)))
                 .ToList();
 
+            #region part one
             Console.WriteLine("One's multiplied by Three's is {0}", PartOne(parsedInput));
             #endregion
 
@@ -40,9 +41,12 @@ namespace Day9
 
         public static int PartOne(List<long> input)
         {
+            // Adding the base jolt
             input.Add(0);
+            // Adding the maximum jolt
             input.Add(input.Max() + 3);
 
+            // Using MoreLINQ nuget for easier solution
             var differences = input
                 .OrderBy(x => x)
                 .Pairwise((a, b) => b - a)
