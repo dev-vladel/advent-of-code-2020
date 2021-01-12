@@ -64,6 +64,54 @@ namespace Day9
 
             #region part two
 
+            rowLength = input.Length * 3;
+            columnLength = input[0].Length * 3;
+
+            var matrixTwo = new char[rowLength, columnLength];
+            var matrixTwoCopy = new char[rowLength, columnLength];
+            countSeats = 0;
+            run = true;
+
+            // Building matrix
+            BuildMatrixTwo(input, matrixTwo, rowLength, columnLength);
+
+            while (run == true)
+            {
+                CopyMatrix(matrixTwoCopy, matrixTwo, rowLength, columnLength);
+
+                for (int i = rowLength / 3; i <= rowLength - rowLength / 3 ; i++)
+                {
+                    for (int j = columnLength / 3; j <= columnLength - columnLength / 3; j++)
+                    {
+                        SeatAlterationTwo(matrixTwo,
+                                       matrixTwoCopy,
+                                       matrixTwo[i, j],
+                                       i,
+                                       j,
+                                       rowLength / 3);
+                    }
+                }
+
+                run = CompareMatrices(matrixTwo, matrixTwoCopy, rowLength - 2, columnLength - 2);
+
+                CopyMatrix(matrixTwo, matrixTwoCopy, rowLength, columnLength);
+            }
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < columnLength; j++)
+                {
+                    Console.Write(matrixTwo[i, j]);
+                    if (matrixTwo[i, j] == '#') countSeats++;
+                }
+
+                Console.WriteLine();
+
+            }
+
+
+            Console.WriteLine(countSeats);
+
             #endregion
 
             // Prevents console app from closing
@@ -115,6 +163,57 @@ namespace Day9
             }
         }
 
+        private static void SeatAlterationTwo(char[,] matrix, char[,] matrixCopy, char seat, int row, int column, int distance)
+        {
+            // rewrite checking of seats
+
+            for (int i = 1; i <= distance; i++)
+            {
+                int count = 0;
+
+                if (matrix[row, column] == 'L')
+                {
+                    if (matrix[row - i, column - i] == '#' ||
+                        matrix[row - i, column] == '#' ||
+                        matrix[row - i, column + i] == '#' ||
+                        matrix[row, column - i] == '#' ||
+                        matrix[row, column + i] == '#' ||
+                        matrix[row + i, column + i] == '#' ||
+                        matrix[row + i, column] == '#' ||
+                        matrix[row + i, column - i] == '#')
+                    {
+                        matrixCopy[row, column] = 'L';
+                    }
+                    else
+                    {
+                        matrixCopy[row, column] = '#';
+                        return;
+                    }
+                }
+                else if (matrix[row, column] == '#')
+                {
+                    if ('#' == matrix[row - i, column - i]) count++;
+                    if ('#' == matrix[row - i, column]) count++;
+                    if ('#' == matrix[row - i, column + i]) count++;
+                    if ('#' == matrix[row, column - i]) count++;
+                    if ('#' == matrix[row, column + i]) count++;
+                    if ('#' == matrix[row + i, column + i]) count++;
+                    if ('#' == matrix[row + i, column]) count++;
+                    if ('#' == matrix[row + i, column - i]) count++;
+
+                    if (count >= 5)
+                    {
+                        matrixCopy[row, column] = 'L';
+                    }
+                    else
+                    {
+                        matrixCopy[row, column] = '#';
+                    }
+                }
+            }
+        }
+
+
         private static bool CompareMatrices(char[,] matrix, char[,] matrixCopy, int rowLength, int columnLength)
         {
             for (int i = 0; i < rowLength + 2; i++)
@@ -141,8 +240,6 @@ namespace Day9
 
         private static void BuildMatrix(string[] input, char[,] matrix, int rowLength, int columnLength)
         {
-            var row = 1;
-
             // Building outer layer
             for (int i = 0; i < rowLength; i++)
             {
@@ -153,11 +250,38 @@ namespace Day9
             }
 
             // Building inner layer
+            var row = 1;
+
             foreach (var line in input)
             {
                 for (int j = 1; j <= line.Length; j++)
                 {
                     matrix[row, j] = line[j - 1];
+                }
+
+                row++;
+            }
+        }
+
+        private static void BuildMatrixTwo(string[] input, char[,] matrix, int rowLength, int columnLength)
+        {
+            // Building outer layer
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < columnLength; j++)
+                {
+                    matrix[i, j] = '.';
+                }
+            }
+
+            // Building inner layer
+            var row = rowLength / 3;
+
+            foreach (var line in input)
+            {
+                for (int j = 1; j <= line.Length; j++)
+                {
+                    matrix[row, j + columnLength / 3 - 1] = line[j - 1];
                 }
 
                 row++;
