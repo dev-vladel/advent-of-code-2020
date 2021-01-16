@@ -109,7 +109,6 @@ namespace Day9
 
             }
 
-
             Console.WriteLine(countSeats);
 
             #endregion
@@ -165,51 +164,128 @@ namespace Day9
 
         private static void SeatAlterationTwo(char[,] matrix, char[,] matrixCopy, char seat, int row, int column, int distance)
         {
-            // rewrite checking of seats
+            if (matrix[row, column] == 'L')
+            {
+                int countOccupied = 0;
 
-            for (int i = 1; i <= distance; i++)
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row - i, column - i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row - i, column - i]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row - i, column]) { countOccupied++; break; }
+                    else if ('L' == matrix[row - i, column]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row - i, column + i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row - i, column + i]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row, column - i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row, column - i]) {  break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row, column + i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row, column + i]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column + i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row + i, column + i]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column]) { countOccupied++; break; }
+                    else if ('L' == matrix[row + i, column]) { break; }
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column - i]) { countOccupied++; break; }
+                    else if ('L' == matrix[row + i, column - i]) { break; }
+                }
+
+                if (countOccupied == 0)
+                {
+                    matrixCopy[row, column] = '#';
+                }
+                else
+                {
+                    matrixCopy[row, column] = 'L';
+                }
+            }
+            else if (matrix[row, column] == '#')
             {
                 int count = 0;
 
-                if (matrix[row, column] == 'L')
+                for (int i = 1; i <= distance; i++)
                 {
-                    if (matrix[row - i, column - i] == '#' ||
-                        matrix[row - i, column] == '#' ||
-                        matrix[row - i, column + i] == '#' ||
-                        matrix[row, column - i] == '#' ||
-                        matrix[row, column + i] == '#' ||
-                        matrix[row + i, column + i] == '#' ||
-                        matrix[row + i, column] == '#' ||
-                        matrix[row + i, column - i] == '#')
-                    {
-                        matrixCopy[row, column] = 'L';
-                    }
-                    else
-                    {
-                        matrixCopy[row, column] = '#';
-                        return;
-                    }
+                    if ('#' == matrix[row - i, column - i]) { count++; break; }
+                    else if ('L' == matrix[row - i, column - i]) break;
                 }
-                else if (matrix[row, column] == '#')
-                {
-                    if ('#' == matrix[row - i, column - i]) count++;
-                    if ('#' == matrix[row - i, column]) count++;
-                    if ('#' == matrix[row - i, column + i]) count++;
-                    if ('#' == matrix[row, column - i]) count++;
-                    if ('#' == matrix[row, column + i]) count++;
-                    if ('#' == matrix[row + i, column + i]) count++;
-                    if ('#' == matrix[row + i, column]) count++;
-                    if ('#' == matrix[row + i, column - i]) count++;
 
-                    if (count >= 5)
-                    {
-                        matrixCopy[row, column] = 'L';
-                    }
-                    else
-                    {
-                        matrixCopy[row, column] = '#';
-                    }
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row - i, column]) { count++; break; }
+                    else if ('L' == matrix[row - i, column]) break;
                 }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row - i, column + i]) { count++; break; }
+                    else if ('L' == matrix[row - i, column + i]) break;
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row, column - i]) { count++; break; }
+                    else if ('L' == matrix[row, column - i]) break;
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row, column + i]) { count++; break; }
+                    else if ('L' == matrix[row, column + i]) break;
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column + i]) { count++; break; }
+                    else if ('L' == matrix[row + i, column + i]) break;
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column]) { count++; break; }
+                    else if ('L' == matrix[row + i, column]) break;
+                }
+
+                for (int i = 1; i <= distance; i++)
+                {
+                    if ('#' == matrix[row + i, column - i]) { count++; break; }
+                    else if ('L' == matrix[row + i, column - i]) break;
+                }
+
+                if (count >= 5)
+                {
+                    matrixCopy[row, column] = 'L';
+                }
+                else
+                {
+                    matrixCopy[row, column] = '#';
+                }
+
             }
         }
 
